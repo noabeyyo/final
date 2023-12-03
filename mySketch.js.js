@@ -43,15 +43,20 @@ function setup() {
 
 function draw() {
   clear(); // Clears the background every frame to make it transparent
-
-  // Your existing code for drawing the rounded rectangle
-  fill(0, 0); // Set transparent background (black with alpha = 0)
+fill(0, 0); // Set transparent background (black with alpha = 0)
   rect(0, 0, width, height, 0); // Rounded corners with 0 degrees
   noStroke(); // No stroke for the rectangle
-  rect(0, 0, width, height, 0); // Rounded corners with 30 degrees
-  // Rest of your code...
+  // No need to draw a rectangle here
+
+  for (let object of objects) {
+    // Your existing code for object manipulation and drawing
+    object.applyGravity(gravity);
+    object.floatWithHover();
+    object.display();
+    // Other checks...
+  }
 }
-  
+
 
 
   for (let object of objects) {
