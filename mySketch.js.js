@@ -42,12 +42,17 @@ function setup() {
 }
 
 function draw() {
-  // Draw transparent background
-  clear();
-  
-  
+  clear(); // Clears the background every frame to make it transparent
+
+  // Your existing code for drawing the rounded rectangle
+  fill(0, 0); // Set transparent background (black with alpha = 0)
+  rect(0, 0, width, height, 0); // Rounded corners with 0 degrees
   noStroke(); // No stroke for the rectangle
   rect(0, 0, width, height, 0); // Rounded corners with 30 degrees
+  // Rest of your code...
+}
+  
+
 
   for (let object of objects) {
     object.applyGravity(gravity);
