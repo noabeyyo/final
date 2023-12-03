@@ -23,7 +23,8 @@ const imageOrder = [
 ];
 
 function setup() {
-  createCanvas(windowWidth, windowHeight); // Set canvas size to match the window
+  noCanvas(); // Prevents p5.js from creating the canvas automatically
+
 
   let y = height - imageSize / 2; // Starting position at the bottom of the canvas
 
