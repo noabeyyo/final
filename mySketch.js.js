@@ -42,13 +42,7 @@ function setup() {
 }
 
 function draw() {
-  // Draw transparent background
-  clear();
-  
-  // Draw rounded rectangle as canvas background
-  fill('#FCE8ED'); // Set container color to FCE8ED
-  noStroke(); // No stroke for the rectangle
-  rect(0, 0, width, height, 0); // Rounded corners with 30 degrees
+  clear(); // Clears the background every frame to make it transparent
 
   for (let object of objects) {
     object.applyGravity(gravity);
