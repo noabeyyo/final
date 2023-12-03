@@ -42,22 +42,13 @@ function setup() {
 }
 
 function draw() {
-  clear(); // Clears the background every frame to make it transparent
-fill(0, 0); // Set transparent background (black with alpha = 0)
-  rect(0, 0, width, height, 0); // Rounded corners with 0 degrees
+  // Draw transparent background
+  clear();
+  
+  // Draw rounded rectangle as canvas background
+  fill('#FCE8ED'); // Set container color to FCE8ED
   noStroke(); // No stroke for the rectangle
-  // No need to draw a rectangle here
-
-  for (let object of objects) {
-    // Your existing code for object manipulation and drawing
-    object.applyGravity(gravity);
-    object.floatWithHover();
-    object.display();
-    // Other checks...
-  }
-}
-
-
+  rect(0, 0, width, height, 0); // Rounded corners with 30 degrees
 
   for (let object of objects) {
     object.applyGravity(gravity);
