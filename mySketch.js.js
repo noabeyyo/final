@@ -20,6 +20,7 @@ const imageOrder = [
   'pilp.png',  // New photo
   'cakee.png',  // New photo
   'arti3.png',  // New photo
+  'orange2.png',  // New photo
 ];
 
 function setup() {
