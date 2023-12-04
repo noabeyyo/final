@@ -1,8 +1,8 @@
 let objects = [];
-let gravity = 0.7; // Gravity for gentle falling
+let gravity = 0.5; // Gravity for gentle falling
 const numObjects = 50; // Number of floating objects (increased for the new photos)
-let imageSize = 290; // Size of the image (increased size)
-const separation = 1; // Separation between stacked images
+let imageSize = 280; // Size of the image (increased size)
+const separation = 0.5; // Separation between stacked images
 
 // Define an ordered list of image file names
 const imageOrder = [
