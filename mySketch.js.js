@@ -2,7 +2,7 @@ let objects = [];
 let gravity = 1; // Gravity for gentle falling
 const numObjects = 50; // Number of floating objects (increased for the new photos)
 let imageSize = 290; // Size of the image (increased size)
-const separation = 0.8; // Separation between stacked images
+const separation = 1; // Separation between stacked images
 
 // Define an ordered list of image file names
 const imageOrder = [
@@ -14,15 +14,14 @@ const imageOrder = [
   'tropit.png',  // New photo   
   'cdra2.png',  // New photo   
   'tilt.png',  // New photo   
-  'loli2.png',  // New photo   
-  'cakep.png',  // New photo   
+  'loli2.png',  // New photo     
   'cloudi.png',  // New photo   
   'pilp.png',  // New photo
   'cakee.png',  // New photo
   'arti3.png',  // New photo
   'orange2.png',  // New photo
   'artii.png',  // New photo
-  'pli.png',  // New photo
+  'ncake.png',  // New photo
 ];
 
 function setup() {
