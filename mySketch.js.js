@@ -32,7 +32,7 @@ function setup() {
   // Loop through the ordered list of images
   for (let i = 0; i < numObjects; i++) {
     const x = random(width); // Random initial x position within the canvas
-    const rotationSpeed = random(-1.5, 0.2); // Random rotation speed with a wider range
+    const rotationSpeed = random(-1, 0.2); // Random rotation speed with a wider range
 
     // Load images based on the ordered list, cycling through them
     const imgFileName = imageOrder[i % imageOrder.length];
