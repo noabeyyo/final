@@ -61,11 +61,11 @@ function draw() {
     // Check for collisions with other objects and adjust the y-coordinate
     for (let other of objects) {
       if (other !== object) {
-        const overlap = 0.3; // Minimum separation between images
+        const overlap = 0.1; // Minimum separation between images
         const minDistance = object.size / 2 + other.size / 2 + overlap;
         const distance = dist(object.x, object.y, other.x, other.y);
         if (distance < minDistance) {
-          const pushForce = (minDistance - distance) * 0.8;
+          const pushForce = (minDistance - distance) * 0.3;
           if (object.y < other.y) {
             object.y -= pushForce;
             object.speedY = 0;
