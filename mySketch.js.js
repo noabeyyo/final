@@ -1,74 +1,132 @@
 let objects = [];
-let gravity = 0.3; // Reduced gravity for gentle falling
-let friction = 0.1; // Small friction for a softer effect
-let restitution = 0.2; // Lower restitution for less bounce
-let density = 0.005; // Lower density for lighter objects
-const numObjects = 50; // Number of floating objects (increased for the new photos)
-let imageSize = 270; // Size of the image (increased size)
-const separation = 0.7; // Separation between stacked images
+let gravity = 0.5; // Adjusted gravity for a softer fall
+const numObjects = 50; // Number of floating objects
+let imageSize = 200; // Adjusted size of the image
+const separation = 0.6; // Separation between stacked images
 
-let images = [];
-let gravity = 0.3; // Gravity for gentle falling
-let friction = 0.1; // Small friction for a softer effect
+// Define an ordered list of image file names
+const imageOrder = [
+  'pizza.png', 'tropi.png', 'arti2.png', 'peni.png', 'gosti.png', 
+  'tropit.png', 'cdra2.png', 'tilt.png', 'loli2.png', 'cloudi.png', 
+  'pilp.png', 'cakee.png', 'arti3.png', 'orange2.png', 'artii.png', 
+  'ncake.png'
+];
 
 function preload() {
-  // Load images into an array
-  for (let i = 1; i <= 5; i++) {
-    let img = loadImage(`pizza.png`);
-    let img = loadImage(`tropi.png`);
-    
-  function setup() {
+  for (let i = 0; i < imageOrder.length; i++) {
+    imageOrder[i] = loadImage(imageOrder[i]);
+  }
+}
+
+function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  // Create some objects with images
-  for (let i = 0; i < 20; i++) {
-    let x = random(width);
-    let y = random(height * 0.3); // Start near the top
-    let img = random(images);
+  let y = height - imageSize / 2;
 
-    let object = new FloatingObject(x, y, img);
-    objects.push(object);
+  for (let i = 0; i < numObjects; i++) {
+    const x = random(width);
+    const rotationSpeed = random(-0.05, 0.05); // Adjusted rotation speed
+
+    const img = random(imageOrder);
+
+    objects.push(new FloatingObject(x, y, rotationSpeed, img));
+    y -= imageSize + separation;
   }
 }
 
 function draw() {
-  background(255);
+  clear();
 
   for (let object of objects) {
+    object.applyGravity(gravity);
+    object.floatWithHover();
     object.display();
 
-    // Apply gravity and update position
-    object.applyGravity(gravity);
-    object.update();
+    // Adjust if objects go beyond canvas bounds
+    if (object.x - imageSize / 2 < 0) {
+      object.x = imageSize / 2;
+    } else if (object.x + imageSize / 2 > width) {
+      object.x = width - imageSize / 2;
+    }
+
+    // Handle collisions with other objects
+    for (let other of objects) {
+      if (other !== object) {
+        const overlap = 10; // Adjusted minimum separation
+        const minDistance = object.size / 2 + other.size / 2 + overlap;
+        const distance = dist(object.x, object.y, other.x, other.y);
+        if (distance < minDistance) {
+          const angle = atan2(object.y - other.y, object.x - other.x);
+          const targetX = other.x + cos(angle) * minDistance;
+          const targetY = other.y + sin(angle) * minDistance;
+
+          object.x = lerp(object.x, targetX, 0.1); // Smoothly move objects away from collision
+          object.y = lerp(object.y, targetY, 0.1);
+        }
+      }
+    }
+  }
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+
+  let y = height - imageSize / 2;
+
+  for (let object of objects) {
+    const x = random(width);
+    const rotationSpeed = random(-0.05, 0.05);
+
+    const img = random(imageOrder);
+
+    object.updateProperties(x, y, rotationSpeed, img);
+    y -= imageSize + separation;
   }
 }
 
 class FloatingObject {
-  constructor(x, y, img) {
+  constructor(x, y, rotationSpeed, img) {
     this.x = x;
     this.y = y;
-    this.img = img;
     this.speedY = 0;
-    this.friction = friction;
+    this.rotationSpeed = rotationSpeed;
+    this.img = img;
+    this.size = imageSize;
   }
 
-  applyGravity(force) {
-    this.speedY += force;
-    this.speedY *= this.friction;
+  updateProperties(x, y, rotationSpeed, img) {
+    this.x = x;
+    this.y = y;
+    this.rotationSpeed = rotationSpeed;
+    this.img = img;
+  }
+
+  applyGravity(gravity) {
+    this.speedY += gravity;
     this.y += this.speedY;
 
-    // Reset position if object goes off-screen
-    if (this.y > height) {
-      this.y = random(-200, -100); // Reset at a random position above the canvas
-      this.speedY = 0;
+    // Bounce off the bottom
+    if (this.y > height - this.size / 2) {
+      this.y = height - this.size / 2;
+      this.speedY *= -0.6; // Reduced bounce velocity
+    }
+  }
+
+  floatWithHover() {
+    const hoverDist = 100;
+    if (dist(mouseX, mouseY, this.x, this.y) < hoverDist) {
+      const moveX = mouseX - pmouseX;
+      const moveY = mouseY - pmouseY;
+      this.x += moveX;
+      this.y += moveY;
     }
   }
 
   display() {
-    image(this.img, this.x, this.y, 50, 50); // Display the image
-  }
-
-  update() {
-    // Any additional updates you want to apply
+    push();
+    translate(this.x, this.y);
+    rotate(this.rotationSpeed);
+    image(this.img, -this.size / 2, -this.size / 2, this.size, this.size);
+    pop();
   }
 }
