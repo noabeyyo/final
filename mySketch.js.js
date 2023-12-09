@@ -1,10 +1,8 @@
 let objects = [];
-let gravity = 0.5; // Adjusted gravity for a softer fall
-const numObjects = 50; // Number of floating objects
-let imageSize = 200; // Adjusted size of the image
-const separation = 0.6; // Separation between stacked images
-
-// Define an ordered list of image file names
+let gravity = 0.5;
+const numObjects = 50;
+let imageSize = 200;
+const separation = 0.6;
 const imageOrder = [
   'pizza.png', 'tropi.png', 'arti2.png', 'peni.png', 'gosti.png', 
   'tropit.png', 'cdra2.png', 'tilt.png', 'loli2.png', 'cloudi.png', 
@@ -25,8 +23,7 @@ function setup() {
 
   for (let i = 0; i < numObjects; i++) {
     const x = random(width);
-    const rotationSpeed = random(-0.05, 0.05); // Adjusted rotation speed
-
+    const rotationSpeed = random(-0.05, 0.05);
     const img = random(imageOrder);
 
     objects.push(new FloatingObject(x, y, rotationSpeed, img));
@@ -42,17 +39,15 @@ function draw() {
     object.floatWithHover();
     object.display();
 
-    // Adjust if objects go beyond canvas bounds
     if (object.x - imageSize / 2 < 0) {
       object.x = imageSize / 2;
     } else if (object.x + imageSize / 2 > width) {
       object.x = width - imageSize / 2;
     }
 
-    // Handle collisions with other objects
     for (let other of objects) {
       if (other !== object) {
-        const overlap = 10; // Adjusted minimum separation
+        const overlap = 10;
         const minDistance = object.size / 2 + other.size / 2 + overlap;
         const distance = dist(object.x, object.y, other.x, other.y);
         if (distance < minDistance) {
@@ -60,7 +55,7 @@ function draw() {
           const targetX = other.x + cos(angle) * minDistance;
           const targetY = other.y + sin(angle) * minDistance;
 
-          object.x = lerp(object.x, targetX, 0.1); // Smoothly move objects away from collision
+          object.x = lerp(object.x, targetX, 0.1);
           object.y = lerp(object.y, targetY, 0.1);
         }
       }
@@ -76,7 +71,6 @@ function windowResized() {
   for (let object of objects) {
     const x = random(width);
     const rotationSpeed = random(-0.05, 0.05);
-
     const img = random(imageOrder);
 
     object.updateProperties(x, y, rotationSpeed, img);
@@ -105,10 +99,9 @@ class FloatingObject {
     this.speedY += gravity;
     this.y += this.speedY;
 
-    // Bounce off the bottom
     if (this.y > height - this.size / 2) {
       this.y = height - this.size / 2;
-      this.speedY *= -0.6; // Reduced bounce velocity
+      this.speedY *= -0.6;
     }
   }
 
